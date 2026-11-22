@@ -2,11 +2,6 @@
 
 **Evidence-based, human-approved migration of PHP applications to a MERN stack.**
 
-![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
-![FastAPI](https://img.shields.io/badge/backend-FastAPI-009688)
-![Tests](https://img.shields.io/badge/tests-133%20cases-blue)
-![Execution](https://img.shields.io/badge/code%20execution-none-lightgrey)
-
 CodeBridge AI is a local-first migration workbench. It analyses a PHP codebase statically (nothing is executed),
 extracts what the application actually does, lets a reviewer approve a migration plan, and can then generate an
 Express, Mongoose and React project. A deterministic parity engine re-analyses the generated code and compares it with
@@ -50,6 +45,12 @@ How to read these numbers:
   Results on other codebases will differ.
 
 ## Screenshots
+
+### Migration overview
+
+Repository scan summary: indexed files, PHP files, detected framework signals and model status.
+
+![Migration overview](docs/screenshots/01-overview.png)
 
 ### Migration plan
 
