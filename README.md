@@ -1,157 +1,236 @@
 # CodeBridge AI
 
-A local tool that helps migrate a PHP/Laravel application to a MERN stack (MongoDB, Express, React, Node.js).
+**Evidence-based, human-approved migration of PHP applications to a MERN stack.**
 
-It reads your PHP code without running it, works out what each route does (authentication, authorization,
-validation, responses, database use), lets you review and approve the plan, and can then generate an Express and
-React project. A built-in checker compares the generated code against the original PHP behaviour and reports every
-difference it finds.
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
+![FastAPI](https://img.shields.io/badge/backend-FastAPI-009688)
+![Tests](https://img.shields.io/badge/tests-133%20cases-blue)
+![Execution](https://img.shields.io/badge/code%20execution-none-lightgrey)
 
-![Overview](docs/screenshots/01-overview.png)
+CodeBridge AI is a local-first migration workbench. It analyses a PHP codebase statically (nothing is executed),
+extracts what the application actually does, lets a reviewer approve a migration plan, and can then generate an
+Express, Mongoose and React project. A deterministic parity engine re-analyses the generated code and compares it with
+the original, reporting every match, mismatch and unknown.
 
-## What it does
+![Migration overview](docs/screenshots/01-overview.png)
 
-1. **Scan** a PHP repository (read-only, nothing is executed).
-2. **Analyse** the code: dependency graph, behaviour contracts, routes and middleware, authentication and
-   authorization, validation and HTTP responses.
-3. **Plan** the migration and review each migration unit. Approvals are recorded against the exact source version.
-4. **Generate** an Express and React project (off by default, requires approval).
-5. **Check parity**: compare the original and the new code and report matches, mismatches and anything it cannot
-   verify.
+## Highlights
+
+- **Static analysis, no execution.** PHP is parsed with Tree-sitter. Source files are never run or modified.
+- **Evidence for every finding.** Routes, middleware, authentication, authorization, validation, responses and database
+  operations are reported with source file, line and confidence.
+- **Human approval required.** Decisions are bound to the exact source version and recorded in a hash-chained audit log.
+- **Verified output.** Generated code is compared against the PHP source across status codes, validation, authorization
+  and database operations. Unproven behaviour is reported as unresolved, never as equivalent.
+- **Local-first.** Source code stays on your machine. A language model is optional and only explains findings.
 
 ## Results on the included example
 
 | Measure | Result |
 |---|---|
-| Routes found in the Laravel example | 15 |
+| PHP files analysed | 22 |
+| Dependency graph | 23 nodes, 34 edges |
+| Routes extracted (with middleware and groups) | 15 |
 | Behaviour contracts extracted | 12 |
-| Dependency graph | 22 nodes, 28 edges |
-| Generated project checked against the PHP source | 13 of 14 contracts match, 1 not implemented |
-| Individual checks run on that comparison | 105 |
-| Deliberately wrong Express example | 4 mismatches detected |
-| Automated tests | 133 |
+| API contracts available for generation | 14 |
+| Generated contracts statically verified equivalent | 13 of 14 (92.9 percent) |
+| Individual parity checks run | 105 |
+| Mismatches caught in a deliberately flawed target | 4 of 4 mapped contracts |
+| Files in the generated project (server, client, Docker, CI) | 52 |
+| REST endpoints in the backend | 27 |
+| Automated test cases | 133 |
 
-Notes on these numbers:
+How to read these numbers:
 
-- "Match" means every compared item (status codes, validation, authorization, database operations and so on) agreed
-  by static analysis. It is evidence for a reviewer, not a guarantee of identical behaviour.
-- Anything the tool cannot prove is reported as unresolved. It is never counted as a match.
-- Runtime comparison tests are not bundled. The report states that none were run.
-- In a test run without FastAPI and tree-sitter installed, 127 of 132 runnable tests passed and 5 were skipped. Run
-  the full suite on your machine (see below) for the complete result.
+- "Verified equivalent" means every compared item agreed under static analysis. It is evidence for a reviewer, not proof
+  of identical runtime behaviour.
+- Anything that cannot be proven is reported as unresolved and is never counted as a match.
+- Runtime comparison needs an isolated sandbox that is not bundled. The report states that no runtime tests were run.
+- Measured on the bundled example (`examples/laravel_blog_fixture`) and its generated project.
+  Results on other codebases will differ.
 
 ## Screenshots
 
-**Repository scan**
+### Migration plan
 
-![Repository scan](docs/screenshots/02-repository-scan.png)
+Stage-by-stage plan from inventory to specification. Stages the planner does not run are shown as blocked, not faked.
 
-**Migration plan**
+![Migration plan](docs/screenshots/02-migration-plan.png)
 
-![Migration plan](docs/screenshots/03-migration-plan.png)
+### Migration unit review
 
-**Migration unit review**
+Every migration unit is reviewed by a person. Approval is recorded per exact source version and does not authorize code
+generation by itself.
 
-![Migration unit review](docs/screenshots/04-migration-units-review.png)
+![Migration unit review](docs/screenshots/03-migration-units-review.png)
+
+### Visual analysis explorer
+
+Interactive dependency graph and database-schema evidence (23 nodes, 34 edges, 20 evidence items for the example).
+Everything shown is static evidence and is labelled as such.
+
+![Visual analysis explorer](docs/screenshots/04-analysis-explorer.png)
+
+### Controlled generation
+
+Generation shows a fingerprint of the exact source, needs a reviewer and reason, and reports static parity of the
+output. Here: 13 contracts implemented, 1 stubbed, 13 of 14 equivalent. Nothing is built, run or deployed.
+
+![Controlled generation](docs/screenshots/05-controlled-generation.png)
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[PHP repository] --> B[Read-only scan]
+    B --> C[Tree-sitter AST]
+    C --> D[Dependency graph]
+    D --> E[Behaviour contracts]
+    E --> F[Routes and middleware]
+    F --> G[Authentication and authorization]
+    G --> H[Validation and HTTP responses]
+    H --> I[Migration specification]
+    I --> J{Human review and approval}
+    J -->|approved| K[Controlled MERN generation]
+    K --> L[Parity report]
+    L --> M[Human review]
+```
+
+Each contract in the parity report receives one of six statuses: `VERIFIED_EQUIVALENT`, `VERIFIED_MISMATCH`,
+`PARTIALLY_VERIFIED`, `NOT_IMPLEMENTED`, `UNVERIFIED` or `BLOCKED`.
 
 ## Quick start
 
-Requires Python 3.10 or newer. On macOS or Linux, one command creates the environment, installs the requirements and
-starts the app:
+Requires Python 3.10 or newer.
+
+**macOS / Linux**
 
 ```bash
-./run.sh --enable-generation
+./run.sh
 ```
 
-The flag only matters if generation is not already enabled (see below). Then open http://127.0.0.1:8000. API docs are
-at http://127.0.0.1:8000/docs.
+This creates a `.venv`, installs `requirements.txt` and starts the server.
 
-Manual setup (also for Windows):
+**Manual setup (all platforms)**
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
+source .venv/bin/activate            # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-Keep the server on `127.0.0.1`. It has no login and should not be exposed to a network.
+Open http://127.0.0.1:8000. Interactive API documentation is at http://127.0.0.1:8000/docs.
+
+The server has no login. Keep it bound to `127.0.0.1`.
+
+### Typical workflow
+
+1. **Scan.** Enter the absolute path of a PHP project. Try `examples/laravel_blog_fixture` first.
+2. **Plan.** Build the migration plan, extract contracts and generate the migration specification.
+3. **Review.** Load the migration units and record a decision for each one.
+4. **Explore.** Inspect the dependency graph and schema evidence in the analysis explorer.
+5. **Generate.** Preview the source fingerprint, enter a reviewer and reason, and generate (see below).
 
 ## Enabling code generation
 
-Generation is protected by two switches, and both must be on:
+Generation is locked by default and needs two local switches. Both files are ignored by Git, so a fresh clone stays
+locked until you opt in:
 
-1. `"generation_enabled": true` in the local file `config/models.local.json`. The tracked `config/models.json` ships with
-   it set to `false`.
-2. The environment variable `CODEBRIDGE_GENERATION_ENABLED=1`, normally kept in a local `.env` file.
+| Switch | Location |
+|---|---|
+| `"generation_enabled": true` | `config/models.local.json` |
+| `CODEBRIDGE_GENERATION_ENABLED=1` | `.env` |
 
-Both local files are ignored by Git, so a fresh clone from GitHub has generation off until you opt in. If your download
-already contains `.env` and `config/models.local.json`, generation is already on. Otherwise run:
+The simplest way to set both:
 
 ```bash
-python scripts/enable_generation.py
+python scripts/enable_generation.py              # enable
+python scripts/enable_generation.py --disable    # lock again
 ```
 
-and restart the server. To lock it again, run `python scripts/enable_generation.py --disable`. When the server starts it
-prints one line showing whether generation is enabled, and the page tells you exactly which switch is missing.
+Restart the server afterwards. The server prints its generation state at startup, and the page names any switch that is
+still missing. Every run additionally requires a fingerprint-bound human approval.
 
-Then:
+Generated files are written only to `workspace/generated/<project name>`. CodeBridge never installs, builds or deploys
+them. Review `MIGRATION_REPORT.md` and `DEPLOYMENT.md` in the output before using anything.
 
-1. Scan a Laravel project that has API routes (routes/api.php). Web-only routes such as Blade pages are not generated.
-   The included `examples/laravel_blog_fixture` is a good first try.
-2. Build the plan and specification, click "Preview & fingerprint", enter a reviewer and reason, and generate.
+## API overview
 
-Generated files are written only to `workspace/generated/<name>`. CodeBridge never installs, builds or deploys them.
-Approval is tied to the exact source version, so changing the source requires a new approval.
+| Area | Endpoints |
+|---|---|
+| Discovery | `POST /api/scan`, `POST /api/analyze`, `GET /api/state` |
+| Analysis | `POST /api/behavior`, `POST /api/dependencies`, `POST /api/schema`, `GET /api/coverage`, `POST /api/impact` |
+| Intelligence stages | `POST /api/intelligence/{stage}` where stage is `dependency-graph`, `contracts`, `routes`, `auth` or `validation-response` |
+| Planning | `POST /api/plan`, `POST /api/specification` |
+| Review | `GET /api/migration-units`, `GET /api/migration-units/{id}`, `POST /api/migration-units/{id}/decision`, `GET /api/migration-approvals/audit` |
+| Parity | `POST /api/parity` |
+| Generation | `GET /api/generate/status`, `POST /api/generate/preview`, `POST /api/generate` |
+| Agents and models | `/api/agent-system/*`, `GET /api/models`, `GET /api/health` |
 
-Typing `CODEBRIDGE_GENERATION_ENABLED=1` on a line by itself does not pass the variable to the server. Use the `.env`
-file, `export`, or put it before the command on the same line.
+## Configuration
 
-## Safety
+| File | Purpose |
+|---|---|
+| `config/models.json` | Model provider and routing. Ships with generation disabled. |
+| `config/models.local.json` | Local generation opt-in (git-ignored) |
+| `.env` | Local environment settings (git-ignored). Copy `.env.example` as a starting point. |
 
-- PHP is never executed and your source files are never modified.
-- Generated code is never run or deployed by the tool.
-- Generation needs two switches (config and environment variable) plus human approval.
-- Approval decisions are stored in a tamper-evident audit log.
-- A language model, if you configure one, can only explain findings. It never decides correctness or approves anything.
-- Source code stays on your machine.
+The default model provider is a local [Ollama](https://ollama.com) endpoint. Analysis, parity and generation do not
+need a model. Cloud provider API keys, if used, are read from environment variables only.
 
-## Optional: local language model
-
-The analysis does not need a model. To use one, install [Ollama](https://ollama.com), then run
-`ollama pull qwen2.5-coder:3b` and `ollama serve`. Provider settings are in `config/models.json`. Copy
-`.env.example` to `.env` for API keys if you use a cloud provider. Never commit `.env`.
-
-## Tests
-
-Run these inside the virtual environment where you installed `requirements.txt` (otherwise the FastAPI and
-`requests` tests cannot import).
+## Testing
 
 ```bash
-source .venv/bin/activate
-pip install -r requirements.txt
 python -m unittest discover -s tests -v
 ```
 
-133 tests cover the scanner, PHP parsing, each analysis stage, approvals and audit log, generation safety checks and
-the parity checker.
+The suite has 133 test cases in 14 modules. They cover the scanner, PHP parsing, every analysis stage, approvals and the
+audit log, generation safety checks (path traversal, symlinks, injection-safe emission, stale approvals) and each parity
+status. In a reference run without the optional FastAPI and tree-sitter packages installed, 127 of the 132 executable
+tests passed, 5 were skipped and none failed. Install `requirements.txt` to run the complete suite.
 
-## Project layout
+## Project structure
 
 ```
-app/          Backend (FastAPI) and analysis engines
-frontend/     Web interface
-config/       Model and feature settings
-examples/     Laravel example, Express example, generated sample project
-tests/        Automated tests
-docs/         Screenshots
-workspace/    Local output (ignored by Git)
+app/                  FastAPI backend and analysis engines
+  dependency_graph.py   dependency graph
+  contract_extraction.py behaviour contracts
+  routes_intelligence.py routes and middleware
+  auth_intelligence.py  authentication and authorization
+  validation_response.py validation and HTTP responses
+  parity_engine.py      behavioural parity engine
+  target_analysis.py    static analysis of MERN targets
+  mern_generator.py     controlled generation
+  migration_units.py    review units, approvals, audit chain
+  agents/, providers/   optional model routing
+frontend/             Web interface
+config/               Model and feature settings
+examples/             PHP example, MERN target example, generated sample
+scripts/              Helper scripts
+tests/                Automated tests
+docs/screenshots/     Interface screenshots
+workspace/            Runtime output (git-ignored)
 ```
+
+## Security model
+
+- PHP is never executed. Generated JavaScript is never installed, built or started by CodeBridge.
+- Generation needs two local switches plus a fingerprint-bound human approval on every run.
+- Approval decisions are stored with locked persistence and a hash-chained audit log.
+- Output is confined to `workspace/generated/<name>` with path-traversal, symlink, overwrite and size checks.
+- PHP-derived identifiers are validated and all strings are emitted as JSON literals.
+- Secrets are read from environment variables, redacted from reports and excluded from Git.
+- A language model can explain a finding but never decides correctness or approves a migration.
+- High-risk findings (for example unauthenticated state changes) need an explicit reviewer acknowledgement.
 
 ## Limitations
 
-- The analysis is static, so dynamic PHP behaviour can remain unresolved.
-- Support is focused on Laravel.
+- Analysis is static, so dynamic dispatch and runtime configuration can remain unresolved.
+- Route, middleware and authorization analysis is deepest for Laravel. Other PHP frameworks get lower-confidence,
+  convention-based results.
 - Views, jobs, mail, events, file uploads, many-to-many relations and complex business logic are stubbed or reported
-  rather than translated.
-- Review and test generated projects in an isolated environment before using them.
+  instead of translated.
+- Business-rule comparison is structural. Equivalent logic written differently is reported as unresolved.
+- Runtime differential testing is not bundled. Without a sandbox it is reported as unavailable.
+- Generated projects are analysed but not built or run by CodeBridge. Test and review them in an isolated environment.
