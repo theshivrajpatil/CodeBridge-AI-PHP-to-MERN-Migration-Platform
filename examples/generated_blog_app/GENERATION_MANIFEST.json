@@ -1,0 +1,178 @@
+{
+  "engine": "mern_generator",
+  "engine_version": "5.24.0",
+  "status": "GENERATED",
+  "project_name": "blog",
+  "source_fingerprint": "1c176dd1cb690861518e2f706712b4243b85a513f241b570efaaa44b6e650228",
+  "approval": {
+    "reviewer": "sample-reviewer",
+    "reason": "sample output for documentation"
+  },
+  "plan": {
+    "35fbd0317366f4f6": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "49f027c6163ab6a1": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "13c82f6834be2e90": {
+      "action": "IMPLEMENT",
+      "reason": "literal JSON closure"
+    },
+    "ef0bdc66ae7c0379": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "f1552d0ff81e9d07": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "871bb9ec0ea5eed8": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "5e43084daab6b08d": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "6a0c7c8008639195": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "1379ad6618c3eb4d": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "266a424a4a5a4ee8": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "a15bc9c2d4e67e4e": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "4a691f01da0ebd53": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    },
+    "5d841a7f7df5a513": {
+      "action": "STUB",
+      "reason": "authorization rule for 'create' is unresolved (Laravel denies by default)"
+    },
+    "2f889e03a78ea768": {
+      "action": "IMPLEMENT",
+      "reason": "recognised recipe"
+    }
+  },
+  "counts": {
+    "IMPLEMENT": 13,
+    "STUB": 1,
+    "EXCLUDE": 0
+  },
+  "files": {
+    ".env.example": "d2fd0c9b3b540befbba58a106857d126be2955a48b14bb9d6f03fe0d1cbfb567",
+    ".github/workflows/ci.yml": "22e83af79d50d1d0b336fdb47faa32cb2936994e7e764d6ffe3bda41ab2b5f21",
+    ".gitignore": "7513374542bd797f72c232372485d7429876ece0f11ae1d633f67e19fa66541e",
+    "DEPLOYMENT.md": "b6d11189c18b8290a51930aa808e7374bb2c2dced4e299761d87b0944bc3ee5c",
+    "MIGRATION_REPORT.md": "4263411c53ac1d3d920bbdffad96023afcac6af3ca9f95cddb3ce5942f6e7fb2",
+    "README.md": "c128f0f87ade1e7775944b987b1fbea6053b8f0ed35b0ed51fcd4395140a8f56",
+    "client/Dockerfile": "fd1e6bfd47edea9c4225b1bb193560ea814cf56918730e68535e479ee1651244",
+    "client/index.html": "8faf3970c986e3ccb0ac0502d5ac1d00932c07399445ef9fb4df6d3660fe6d31",
+    "client/nginx.conf": "a381664cd267f1861c924c94613f7291f41a7efe68a86b2032e97638908c5b88",
+    "client/package.json": "e9bcd20d2fa6dbecdb35dec7956a9fe1ffca02058e9fc8c463c4e7c3cf67ae45",
+    "client/src/App.jsx": "f313fc0fd7d3d379132c88d3ee01194e265407668ab2c7aeb3eeb824a236555a",
+    "client/src/api/endpoints.js": "55fb3bb31186acf203ba741feaf93d5a014f08b51411e821460e19b9a34bfcb6",
+    "client/src/api/http.js": "db90be592027606169a797674bafe66339fcc69e0c80d79821f8a4c3bfad64a0",
+    "client/src/auth/AuthContext.jsx": "0b01d0a82f482435e34496277fbf3603335a165d1a16efb4729e621a6a1a8bff",
+    "client/src/main.jsx": "6b13bf134fbf0e6c19c16cbdd2d5e61956b15cf07526d5557bd96e27bf5e170b",
+    "client/vite.config.js": "5146a056e49334bdc65fca1668a27d8478924a47051f6de71afe19fbc3718377",
+    "docker-compose.yml": "094a1936d344c47aa5dda9a980ebefc9e894fc678a9a2f3aa82bee70ceae3c6b",
+    "server/.dockerignore": "65fa6099991646e5206d2ce96446a658626bd1800367d9aca67032769c09c582",
+    "server/.env.example": "d2fd0c9b3b540befbba58a106857d126be2955a48b14bb9d6f03fe0d1cbfb567",
+    "server/Dockerfile": "479c51a713c29eb2aeb743491474ca2e07ed4d08c28eecf1a98fc3ed2680056f",
+    "server/package.json": "a349f9925e3a650403d265912295ad910e9e417c370d8554d26f24762441a4dc",
+    "server/src/app.js": "824b48e15134dc95ac02afeb05d70ce6df7ec3b344e7b89818c68a4676edd013",
+    "server/src/config/db.js": "df7b37f3beec2365d1c4685b1d54979918fa5b288794639e3b2d9bc733d8d6e4",
+    "server/src/config/env.js": "6dd367173dc3a1d73204b9a30b5a96057af1bb64202bdd1807277d97b4318b94",
+    "server/src/controllers/AdminController.js": "61a404b87fdc141c80bf4efb576e9b8383ad6df915f164cad223a092e6699ab9",
+    "server/src/controllers/AuthController.js": "3431e0879b0cdfcafd35a3b17a0adb5d050a1631acbdbe6032da9e3616d7b19d",
+    "server/src/controllers/CommentController.js": "0408d194528efca4a9fb5d7585120b10e2020676a8ec4730dc6fc976f14442de",
+    "server/src/controllers/PostController.js": "16c4545602ea1c4f71157bff4c3b168c10a6cb01d757b1d64c2c7e189b0a9050",
+    "server/src/lib/asyncHandler.js": "9006c3d8d847ed78b85502b6b049d0c5a22cd611933f71279b13da53664fab7b",
+    "server/src/lib/httpError.js": "03ce72b1e5547e76e3afa9278ee5992bab8c8513932fdbbf6448d6f744c9cf94",
+    "server/src/lib/logger.js": "ca5e3b4ce032f9c7b965561bddd0b30c381121591196ec0a94b5a1c187ccba64",
+    "server/src/lib/paginate.js": "bc92a6c04a3df567e346337cfb55782307e183058b186f6ad38493d6b0196800",
+    "server/src/lib/pick.js": "debb7a0ffbfd31df5e98300f77de8e7c30c41c3f160813a652f3097570b6630c",
+    "server/src/lib/tokens.js": "f5753bdf99416d607e0c0350675969cb427197b7d488fb83461f158e49c06d9d",
+    "server/src/middleware/asyncChecks.js": "219d9cbca874316413b5af625de0ad9569cfef384285e63a56f1fdcc57509a51",
+    "server/src/middleware/authenticate.js": "2fab9667f3f1d86338b99c7fa2ded963f6f4857965f399a2e86a729270bb51d6",
+    "server/src/middleware/bind.js": "a3ac78918403e921b06b71949f4c4a760258a4d1411f814c07c6fac9b8b445fe",
+    "server/src/middleware/errorHandler.js": "4d29409c92aac67288fabc62f9f934ef5c6d0330999a872995fd1c05de0f76c7",
+    "server/src/middleware/noSqlSanitize.js": "d0c013f3246e7f34d2775acf540ddc2df8aa451c1c21fea4ec93cb18c1d1e591",
+    "server/src/middleware/rateLimit.js": "8fc1b2afe50d815d5e0b2578d9b7fdb2e8a887a7152ce52e8b018d978068ffa3",
+    "server/src/middleware/requireRole.js": "f549ca471826eb5cd25e790db750eec1172e9fe1e3d8983915207ceef8e0fe66",
+    "server/src/middleware/validate.js": "9e25722fb5c9a4a8436f1f486f19853dd02501af241a0210eebe77f1a929077f",
+    "server/src/models/AccessToken.js": "3b9c493e29568e8f1d4d4cefcaa843a88ccbcd36c35c8c4fd3352b83c176b00b",
+    "server/src/models/Comment.js": "f9a96ee84e76d6328cf1a69c3cb73e28cbaf9c8a7dccd8a3bbc06a6247531720",
+    "server/src/models/Post.js": "688245da7d3b8c5874d793e4b8a012cc4876fc36448b0f1ec272138e5e255ca8",
+    "server/src/models/User.js": "806a69a5844e24fe749c8a259515e9c09f4ea76384b70e8ef19f26ed7f717e37",
+    "server/src/models/index.js": "07f7389033bff657828b6443464c9563c150d70adba0550856af091a91abf244",
+    "server/src/resources/PostResource.js": "344d40b662d954935c18e022b6fd91210e3a2098c85006a8450735fc7d77723d",
+    "server/src/routes/api.js": "d511d03cd893c0b93e2cad4135faf509758f6ede30555ab6c9f862566dcb3805",
+    "server/src/server.js": "1f4e5b2db03480e591d410a184d2319649da8b9197478763608093e1b7e0c09e",
+    "server/src/validators/index.js": "3af706661784984b9c857ca5fc56c88159e4812cd273ae8bf706e29ce783d8d0",
+    "server/tests/security.test.js": "c77050cb4a2608838185933e1510cf8c4dac6844cdb943eb408a124c99b6ebe6"
+  },
+  "gate": {
+    "allowed": true,
+    "reasons": [],
+    "source_fingerprint": "1c176dd1cb690861518e2f706712b4243b85a513f241b570efaaa44b6e650228",
+    "approved": [
+      "35fbd0317366f4f6",
+      "49f027c6163ab6a1",
+      "13c82f6834be2e90",
+      "ef0bdc66ae7c0379",
+      "f1552d0ff81e9d07",
+      "871bb9ec0ea5eed8",
+      "5e43084daab6b08d",
+      "6a0c7c8008639195",
+      "1379ad6618c3eb4d",
+      "266a424a4a5a4ee8",
+      "a15bc9c2d4e67e4e",
+      "4a691f01da0ebd53",
+      "5d841a7f7df5a513",
+      "2f889e03a78ea768"
+    ],
+    "excluded": []
+  },
+  "parity": {
+    "metrics": {
+      "total_source_contracts": 14,
+      "mapped_to_target": 13,
+      "verified_equivalent": 13,
+      "verified_mismatch": 0,
+      "partially_verified": 0,
+      "not_implemented": 1,
+      "unverified": 0,
+      "blocked": 0,
+      "runtime_tests_executed": 0,
+      "runtime_tests_passed": 0,
+      "runtime_tests_failed": 0,
+      "runtime_tests_blocked": 0,
+      "excluded_web_contracts": 1,
+      "extra_target_routes": 0,
+      "static_verification_coverage": 0.9286,
+      "coverage_definition": "verified_equivalent contracts / total_source_contracts (API route contracts; excluded web routes not counted)",
+      "coverage_warning": "Coverage is a count of contracts whose compared dimensions matched statically. It is not proof of behavioural equivalence."
+    },
+    "report_fingerprint": "db5e4c30da33744e4cb44ba5a0c5dc1ae7cc7ba57d5c24ee4f226557dff2702b"
+  },
+  "policy": {
+    "deployment_authorized": false,
+    "auto_approval": false,
+    "human_review_required": true,
+    "note": "Files only. Nothing was built, installed, executed or deployed."
+  }
+}

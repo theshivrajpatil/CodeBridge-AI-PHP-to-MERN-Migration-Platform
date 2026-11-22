@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { authenticate, requireRole } from '../middleware/authenticate.js';
+import { validate } from '../middleware/validate.js';
+import { registerSchema, storePost } from '../validators/schemas.js';
+import { AuthController } from '../controllers/AuthController.js';
+import { PostController } from '../controllers/PostController.js';
+export const apiRouter = Router();
+apiRouter.post('/register', validate(registerSchema), AuthController.register);
+apiRouter.get('/posts', authenticate, PostController.index);
+apiRouter.post('/posts', authenticate, validate(storePost), PostController.store);
+apiRouter.delete('/posts/:post', authenticate, PostController.destroy);

@@ -1,0 +1,3 @@
+#!/usr/bin/env php
+<?php
+// Marker file for the isolated Laravel-shaped analysis fixture. Not an executable app.
